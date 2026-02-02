@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Management System</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h1>📋 Task Manager</h1>
+            </div>
+            <nav class="nav-menu">
+                <a href="#dashboard" class="nav-link active" data-page="dashboard">
+                    <span class="icon">📊</span> Dashboard
+                </a>
+                <a href="#tasks" class="nav-link" data-page="tasks">
+                    <span class="icon">✓</span> Tasks
+                </a>
+                <a href="#time" class="nav-link" data-page="time">
+                    <span class="icon">⏱️</span> Time Tracking
+                </a>
+                <a href="#analytics" class="nav-link" data-page="analytics">
+                    <span class="icon">📈</span> Analytics
+                </a>
+                <a href="#settings" class="nav-link" data-page="settings">
+                    <span class="icon">⚙️</span> Settings
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <h2 id="page-title">Dashboard</h2>
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="btn-new-task">+ New Task</button>
+                    <div class="user-menu">
+                        <span id="current-time"></span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="content">
+                <!-- Dashboard Page -->
+                <div id="dashboardPage" class="page-content active">
+                    <div class="dashboard-grid">
+                        <!-- Summary Cards -->
+                        <div class="card-grid">
+                            <div class="card">
+                                <h3>Total Tasks</h3>
+                                <div class="stat-value" id="totalTasks">0</div>
+                                <p class="stat-label">All Tasks</p>
+                            </div>
+                            <div class="card">
+                                <h3>Completed</h3>
+                                <div class="stat-value" id="completedTasks">0</div>
+                                <p class="stat-label">Done Tasks</p>
+                            </div>
+                            <div class="card">
+                                <h3>Completion Rate</h3>
+                                <div class="stat-value" id="completionRate">0%</div>
+                                <p class="stat-label">Overall</p>
+                            </div>
+                            <div class="card">
+                                <h3>Overdue</h3>
+                                <div class="stat-value danger" id="overdueTasks">0</div>
+                                <p class="stat-label">Tasks</p>
+                            </div>
+                        </div>
+
+                        <!-- Quick Stats -->
+                        <div class="quick-stats">
+                            <h3>Today's Activity</h3>
+                            <div id="quickStatsList">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+
+                        <!-- Recent Tasks -->
+                        <div class="recent-tasks">
+                            <h3>Recent Tasks</h3>
+                            <div id="recentTasksList" class="tasks-mini-list">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tasks Page -->
+                <div id="tasksPage" class="page-content">
+                    <div class="tasks-container">
+                        <div class="filters">
+                            <button class="filter-btn active" data-filter="all">All Tasks</button>
+                            <button class="filter-btn" data-filter="not_started">Not Started</button>
+                            <button class="filter-btn" data-filter="in_progress">In Progress</button>
+                            <button class="filter-btn" data-filter="done">Done</button>
+                            <button class="filter-btn" data-filter="blocked">Blocked</button>
+                        </div>
+
+                        <div id="tasksList" class="tasks-list">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Time Tracking Page -->
+                <div id="timePage" class="page-content">
+                    <div class="time-tracking">
+                        <div class="active-timers">
+                            <h3>Active Timers</h3>
+                            <div id="activeTimersList" class="timers-list">
+                                <p class="empty">No active timers</p>
+                            </div>
+                        </div>
+
+                        <div class="time-logs">
+                            <h3>Time Breakdown</h3>
+                            <div class="time-breakdown-container">
+                                <div id="timeByPriority" class="breakdown-section">
+                                    <h4>By Priority</h4>
+                                    <div id="priorityBreakdown"></div>
+                                </div>
+                                <div id="timeByStatus" class="breakdown-section">
+                                    <h4>By Status</h4>
+                                    <div id="statusBreakdown"></div>
+                                </div>
+                            </div>
+
+                            <h3>Recent Time Logs</h3>
+                            <div id="timeLogsList" class="logs-list">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analytics Page -->
+                <div id="analyticsPage" class="page-content">
+                    <div class="analytics-container">
+                        <div class="analytics-section">
+                            <h3>Completion by Priority</h3>
+                            <div id="priorityAnalysis" class="analysis-table">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+
+                        <div class="analytics-section">
+                            <h3>Weekly Trend</h3>
+                            <div id="weeklyTrend" class="trend-chart">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Page -->
+                <div id="settingsPage" class="page-content">
+                    <div class="settings-container">
+                        <div class="settings-section">
+                            <h3>Export Data</h3>
+                            <div class="export-buttons">
+                                <button class="btn btn-secondary" id="exportAll">Export All Tasks to Calendar</button>
+                                <button class="btn btn-secondary" id="exportUndone">Export Undone Tasks</button>
+                                <button class="btn btn-secondary" id="exportOverdue">Export Overdue Tasks</button>
+                            </div>
+                        </div>
+
+                        <div class="settings-section">
+                            <h3>Database</h3>
+                            <div class="db-info" id="dbStats">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="taskModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="taskFormTitle">New Task</h2>
+            <form id="taskForm">
+                <input type="hidden" id="taskId">
+                <div class="form-group">
+                    <label>Title *</label>
+                    <input type="text" id="taskTitle" required>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="taskDescription"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Priority</label>
+                        <select id="taskPriority">
+                            <option value="low">Low</option>
+                            <option value="medium" selected>Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Due Date</label>
+                        <input type="date" id="taskDueDate">
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select id="taskStatus">
+                            <option value="not_started">Not Started</option>
+                            <option value="in_progress">In Progress</option>
+                            <option value="blocked">Blocked</option>
+                            <option value="done">Done</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save Task</button>
+                    <button type="button" class="btn btn-secondary" id="closeModal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast"></div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
